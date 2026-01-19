@@ -25,6 +25,7 @@ app.use('/api/users', router)
 app.use(notFound);
 app.use(errorHandler);
 
+/*
 let users = [
     {id:1, name:'suman', email:'jyxsuman@gmail.com'},
     {id:2, name:'Rushali', email:'rushalilage12@gmail.com'}
@@ -35,7 +36,6 @@ app.get('/', (req, res) => {
     res.send('Hello from Express');
 });
 
-/*
 //GET
 app.get("/users/:id", (req, res) => {
   const user = users.find(u => u.id === Number(req.params.id));
