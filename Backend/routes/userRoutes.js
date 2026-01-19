@@ -10,7 +10,7 @@ import {
   authUser,
 } from "../controllers/userController.js";
 
-import { protect } from "../middlewares/authMiddleware.js";
+import { admin, ownerOrAdmin, protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -19,6 +19,12 @@ const validateUser = [
     body('email').isEmail().withMessage('Valid email is required'),
     body('password').isLength({min:6}).withMessage('Password must be at least 6 characters'),
     body('age').optional().isInt({min:0}).withMessage('Age must be positive number')
+];
+const validateUpdate = [
+    body("name").optional().notEmpty().withMessage("Name cannot be empty"),
+    body("email").optional().isEmail().withMessage("Must be a valid email"),
+    body("password").optional().isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
+    body("age").optional().isInt({ min: 0 }).withMessage("Age must be positive number"),
 ];
 
 
@@ -32,20 +38,20 @@ router.post("/login", [
 
 //USERS
 
-//GET /api/users (protected)
-router.get("/", protect, getUsers);
+//GET /api/users (protected, admin only)
+router.get("/", protect, admin, getUsers);
 
-//POST /api/users (protected - admin or internal use)
-router.post("/", protect, validateUser, createUser)
+//POST /api/users (protected - admin only for internal creation)
+router.post("/", protect, admin, validateUser, createUser)
 
-//GET /api/users:id (protected)
-router.get("/:id", protect, getUserById);
+//GET /api/users:id (protected, ownerOrAdmin)
+router.get("/:id", protect, ownerOrAdmin, getUserById);
 
 //PUT /api/users/:id (protected)
-router.put("/:id", protect, updateUser);
+router.put("/:id", protect, ownerOrAdmin, validateUpdate, updateUser);
 
 //DELETE /api/users/:id (protected)
-router.delete("/:id", protect, deleteUser);
+router.delete("/:id", protect, ownerOrAdmin, deleteUser);
 
 
 
