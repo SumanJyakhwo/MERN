@@ -11,8 +11,8 @@ export const getUsers = async (req,res) => {
 export const getUserById = async (req, res) => {
     const user = await User.findById(req.params.id);
 
-    if(!user) return res.statis(404).json({success: false, message:'user not found'});
-    res.status(200).json({succcess: true, message:'user fetched', data:user});
+    if(!user) return res.status(404).json({success: false, message:'user not found'});
+    res.status(200).json({success: true, message:'user fetched', data:user});
 }
 
 //POST /api/users
