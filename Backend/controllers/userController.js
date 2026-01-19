@@ -2,15 +2,15 @@ import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 import { validationResult } from "express-validator";
 //GET /api/users
-export const getUsers = async (req, res) => {
+export const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   res
     .status(200)
     .json({ success: true, message: "users fetched", data: users });
-};
+});
 
 //GET /api/users/:id
-export const getUserById = async (req, res) => {
+export const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (!user) {
@@ -18,10 +18,10 @@ export const getUserById = async (req, res) => {
     throw new Error("user not found");
   }
   res.status(200).json({ success: true, message: "user fetched", data: user });
-};
+});
 
 //POST /api/users
-export const createUser = async (req, res) => {
+export const createUser = asyncHandler(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.status(400);
@@ -45,10 +45,10 @@ export const createUser = async (req, res) => {
   res
     .status(201)
     .json({ success: true, message: "user created", data: newUser });
-};
+});
 
 //PUT /api/users/:id
-export const updateUser = async (req, res) => {
+export const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -58,14 +58,14 @@ export const updateUser = async (req, res) => {
     throw new Error("user not found");
   }
   res.status(200).json({ success: true, message: "user updated", data: user });
-};
+});
 
 //DELETE /api/users/:id
-export const deleteUser = async (req, res) => {
+export const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
   if (!user) {
     res.status(404);
     throw new Error("user not found");
   }
   res.status(200).json({ success: true, message: "user deleted", data: user });
-};
+});

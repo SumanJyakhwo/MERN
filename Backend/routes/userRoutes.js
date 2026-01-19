@@ -17,7 +17,7 @@ const validateUser = [
     body('age').optional().isInt({min:0}).withMessage('Age must be positive number')
 ]
 
-router.route("/").get(getUsers).post(createUser);
+router.route("/").get(getUsers).post(validateUser, createUser);
 router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
 
 export default router;
