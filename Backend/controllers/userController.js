@@ -76,7 +76,7 @@ export const createUser = asyncHandler(async (req, res) => {
         .join(", "),
     );
   }
-  const { name, email, age } = req.body;
+  const { name, email, password, age } = req.body;
 
   //check if email exists
   const existing = await User.findOne({ email });
@@ -85,7 +85,7 @@ export const createUser = asyncHandler(async (req, res) => {
     throw new Error("Email already in use");
   }
 
-  const newUser = await User.create({ name, email, age });
+  const newUser = await User.create({ name, email, password, age });
   res
     .status(201)
     .json({ success: true, message: "user created", data: newUser });

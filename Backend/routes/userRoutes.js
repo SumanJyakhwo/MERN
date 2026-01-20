@@ -12,7 +12,7 @@ import {
 
 import { admin, ownerOrAdmin, protect } from "../middlewares/authMiddleware.js";
 
-const router = express.Router();
+const userRoutes = express.Router();
 
 const validateUser = [
     body('name').notEmpty().withMessage('Name is required'),
@@ -28,10 +28,10 @@ const validateUpdate = [
 ];
 
 
-router.post("/register",validateUser, registerUser);
+userRoutes.post("/register",validateUser, registerUser);
 
 //POST /api/users/login
-router.post("/login", [
+userRoutes.post("/login", [
   body('email').isEmail().withMessage("valid email is required"),
   body('password').notEmpty().withMessage('password  is required'),
 ], authUser);
@@ -39,19 +39,19 @@ router.post("/login", [
 //USERS
 
 //GET /api/users (protected, admin only)
-router.get("/", protect, admin, getUsers);
+userRoutes.get("/", protect, admin, getUsers);
 
 //POST /api/users (protected - admin only for internal creation)
-router.post("/", protect, admin, validateUser, createUser)
+userRoutes.post("/", protect, admin, validateUser, createUser)
 
 //GET /api/users:id (protected, ownerOrAdmin)
-router.get("/:id", protect, ownerOrAdmin, getUserById);
+userRoutes.get("/:id", protect, ownerOrAdmin, getUserById);
 
 //PUT /api/users/:id (protected)
-router.put("/:id", protect, ownerOrAdmin, validateUpdate, updateUser);
+userRoutes.put("/:id", protect, ownerOrAdmin, validateUpdate, updateUser);
 
 //DELETE /api/users/:id (protected)
-router.delete("/:id", protect, ownerOrAdmin, deleteUser);
+userRoutes.delete("/:id", protect, ownerOrAdmin, deleteUser);
 
 
 
@@ -60,5 +60,5 @@ router.delete("/:id", protect, ownerOrAdmin, deleteUser);
 router.route("/").get(getUsers).post(validateUser, createUser);
 router.route("/:id").get(getUserById).put(updateUser).delete(deleteUser);
 */
-export default router;
+export default userRoutes;
 ;

@@ -4,7 +4,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import connectDB from './config/db.js';
-import router from './routes/userRoutes.js' 
+import userRoutes from './routes/userRoutes.js' 
+import productRoutes from './routes/productRoutes.js';
 
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 
@@ -19,13 +20,23 @@ app.use(cors());
 app.use(morgan("dev"));
 
 //Routes
-app.use('/api/users', router)
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+
 
 //Error handling
 app.use(notFound);
 app.use(errorHandler);
 
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+
 /*
+//In memory user array
 let users = [
     {id:1, name:'suman', email:'jyxsuman@gmail.com'},
     {id:2, name:'Rushali', email:'rushalilage12@gmail.com'}
@@ -145,8 +156,3 @@ app.delete("/users/:id", (req, res) => {
   });
 });
 */
-
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
