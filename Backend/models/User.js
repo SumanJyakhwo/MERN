@@ -4,8 +4,10 @@ import bcrypt from "bcryptjs";
 const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
+    address: {type: String, required:true},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    role: {type: String, enum: ["CEO", "Management", "Employee"], required: true},
     age: { type: Number, min: 0, default:0},
     isAdmin: { type: Boolean, default: false }, // recommended for admin checks
   },

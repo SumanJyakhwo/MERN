@@ -39,21 +39,21 @@ export const protect = expressAsyncHandler(async (req, res, next) => {
 
 //Admin-only middleware
 export const admin = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+  if (req.user && req.user.role === "Management") {
     return next();
   }
   res.status(403);
-  throw new Error("Admin access only");
+  throw new Error("CEO and MANAGEMENT access only");
 };
 
 //Ownership Middleware
 export const ownerOrAdmin = (req, res, next) => {
   if (
     req.user &&
-    (req.user.isAdmin || req.user._id.toString() === req.params.id)
-  ) {
+    (((req.user.role === "Management" || "CEO")) || req.user._id.toString()) === req.params.id)
+   {
     return next();
   }
   res.status(403);
-  throw new Error("Access denied: not owner or admin");
+  throw new Error("Access denied: not CEO or Management");
 };

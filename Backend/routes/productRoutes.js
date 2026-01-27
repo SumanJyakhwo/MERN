@@ -14,8 +14,9 @@ const validateProduct = [
     body('category').notEmpty().withMessage('Category is required'),
     body('countInStock').isInt({ min: 0 }).withMessage('Stock count must be a non-negative integer'),
 ]
-
+//POST /api/products/create
 productRoutes.post("/create", protect, admin, validateProduct,  createProduct);
+
 productRoutes.get("/", protect, admin, getProducts);
 
 export default productRoutes;
