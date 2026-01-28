@@ -1,11 +1,13 @@
-import axios from "axios";
+import API from "./api";
 
-const API_URL = "http://localhost:5000/api/users/";
+// Auth
+export const loginUser = (data) => API.post("/users/login", data);
+export const registerUser = (data) => API.post("/users/register", data);
 
-export const registerUser = (data) => axios.post(API_URL + "register", data);
-export const loginUser = (data) => axios.post(API_URL + "login", data);
-export const getUsers = (token) =>axios.get(API_URL, {headers: { Authorization: `Bearer ${token}` },});
-export const getUserById = (id, token) => axios.get(`${API_URL}${id}`, { headers: { Authorization: `Bearer ${token}` } });
-export const createUser = (data, token) => axios.post(API_URL, data, { headers: { Authorization: `Bearer ${token}` } });
-export const updateUser = (id, data, token) => axios.put(`${API_URL}${id}`, data, { headers: { Authorization: `Bearer ${token}` } });
-export const deleteUser = (id, token) => axios.delete(`${API_URL}${id}`, { headers: { Authorization: `Bearer ${token}` } });
+// Users
+export const getUsers = () => API.get("/users"); // privileged only
+export const getUserById = (id) => API.get(`/users/${id}`); // owner or privileged
+export const createUser = (data) => API.post("/users", data); // privileged only
+export const updateUser = (id, data) => API.put(`/users/${id}`, data); // owner or privileged
+export const updateUserPassword = (id, data) => API.put(`/users/${id}/password`, data); // owner or privileged
+export const deleteUser = (id) => API.delete(`/users/${id}`); // owner or privileged

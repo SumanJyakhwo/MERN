@@ -1,13 +1,42 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;   
+@keyframes floatA {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(8px, -12px) rotate(1deg); }
+  50%  { transform: translate(-6px, -18px) rotate(-1deg); }
+  75%  { transform: translate(-10px, -8px) rotate(0.5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@keyframes floatB {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  30%  { transform: translate(-10px, -6px) rotate(-1deg); }
+  55%  { transform: translate(6px, -14px) rotate(1.2deg); }
+  80%  { transform: translate(10px, -4px) rotate(0.5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
 }
+
+@keyframes floatC {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(4px, -10px) rotate(0.6deg); }
+  45%  { transform: translate(-12px, -6px) rotate(-1.2deg); }
+  70%  { transform: translate(8px, -16px) rotate(1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.animate-float-a {
+  animation: floatA 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-b {
+  animation: floatB 8.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-c {
+  animation: floatC 6.8s ease-in-out infinite;
+  will-change: transform;
+}
+
