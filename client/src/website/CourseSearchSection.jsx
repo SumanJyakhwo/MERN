@@ -1,6 +1,6 @@
 function CourseSearchSection() {
   return (
-    <section className="bg-white py-[60px]">
+      <section className="bg-[#F9F5FF] py-[60px]">
       <div className="max-w-[800px] mx-auto px-[24px] flex flex-col items-center gap-[24px]">
         {/* Title */}
         <h1 className="text-[48px] leading-[60px] font-[700] text-center">

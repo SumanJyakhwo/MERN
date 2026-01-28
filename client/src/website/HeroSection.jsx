@@ -10,7 +10,7 @@ import childsafe from "../assets/childsaftenet.png";
 function HeroSection() {
   return (
     <section className="bg-white">
-      <div className="max-w-[1200px] mx-auto px-[60px] py-[100px] grid grid-cols-2 gap-[40px] items-center">
+      <div className="max-w-[1200px] mx-auto px-[60px] py-[80px] grid grid-cols-2 gap-[40px] items-center">
         {/* Left */}
         <div>
           <h1 className="text-[48px] leading-[60px] font-[700] mb-[24px]">
@@ -38,9 +38,9 @@ function HeroSection() {
         </div>
 
         {/* Right */}
-        <div className="relative w-[420px] h-[420px] mx-[80px]">
+        <div className="relative w-[420px] h-[420px] mx-[80px] mt-[80px]">
           {/* Decorative circles */}
-          <div className="absolute top-[-10px] left-[-30px] w-[420px] h-[420px] rounded-full border-[2px] border-dashed border-[#E889E8]" />
+          <div className="absolute top-[-10px] left-[-30px] w-[420px] h-[420px] rounded-full border-[4px] border-dashed border-[#E889E8]" />
           <div className="absolute top-[10px] left-[-10px] w-[380px] h-[380px] rounded-full bg-gradient-to-r from-[#B56CFF] to-[#E889E8]" />
 
           {/* Main image */}

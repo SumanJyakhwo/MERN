@@ -1,4 +1,6 @@
 import avatar from '../assets/avatar.png';
+import robotics from '../assets/robotics.jpg';
+import coding from '../assets/coding.jpg';
 
 function PopularCoursesSection() {
   return (
@@ -15,16 +17,16 @@ function PopularCoursesSection() {
         <div className="grid grid-cols-3 gap-[24px]">
           {[
             {
-              title: "Web Design & Development",
+              title: "Robotics and IoT",
               price: "$560.00",
-              instructor: "Morgan",
-              image: {avatar},
+              instructor: "Suman",
+              image: {robotics},
             },
             {
-              title: "Wireframing & Prototyping",
+              title: "Python Programming",
               price: "$180.00",
-              instructor: "Jordan",
-              image: {avatar},
+              instructor: "Ujjwol",
+              image: {coding},
             },
             {
               title: "Python For Data Science",
