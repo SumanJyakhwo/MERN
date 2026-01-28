@@ -5,9 +5,9 @@ import cors from 'cors';
 
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js' 
-import productRoutes from './routes/productRoutes.js';
 
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
+import employeeRoutes from './routes/employeeRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -21,7 +21,8 @@ app.use(morgan("dev"));
 
 //Routes
 app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes);
+app.use('/api/employees', employeeRoutes);
+
 
 
 //Error handling

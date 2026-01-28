@@ -8,7 +8,7 @@ import {
   registerUser,
   authUser,
 } from "../controllers/userController.js";
-import { admin, ownerOrAdmin, protect } from "../middlewares/authMiddleware.js";
+import { ceoOnly, ceoAndMgmt, protect } from "../middlewares/authMiddleware.js";
 import {
   validateUpdate,
   validate,
@@ -26,25 +26,24 @@ userRoutes.post("/login", validateLogin, authUser);
 userRoutes.post("/register", validateRegister, validate, registerUser);
 
 //GET /api/users (protected, admin only)
-userRoutes.get("/", protect, admin, getUsers);
+userRoutes.get("/", protect, ceoAndMgmt, getUsers);
 
 //GET /api/users:id (protected, ownerOrAdmin)
-userRoutes.get("/:id", protect, admin, getUserById);
+userRoutes.get("/:id", protect, ceoAndMgmt, getUserById);
 
 //POST /api/users (protected - admin only for internal creation)
-userRoutes.post("/", protect, admin, validateCreate, validate, createUser);
+userRoutes.post("/", protect, ceoAndMgmt, validateCreate, validate, createUser);
 
 //PUT /api/users/:id (protected)
 userRoutes.put(
   "/:id",
   protect,
-  ownerOrAdmin,
+  ceoAndMgmt,
   validateUpdate,
-  validate,
   updateUser,
 );
 
 //DELETE /api/users/:id (protected)
-userRoutes.delete("/:id", protect, ownerOrAdmin, deleteUser);
+userRoutes.delete("/:id", protect, ceoAndMgmt, deleteUser);
 
 export default userRoutes;

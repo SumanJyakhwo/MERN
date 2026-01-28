@@ -1,21 +1,18 @@
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
-import { validationResult } from "express-validator";
 import generateToken from "../utils/generateToken.js";
 
 //POST /api/users/register
 export const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, address, password, age } = req.body;
+  const { name, email, password, number } = req.body;
   const userExists = await User.findOne({email});
   if(userExists){
     res.status(400);
     throw new Error('User already exists');
   }
 
-  const user = await User.create({name, email, address, password, age});
-  res.status(201).json({
-    success:true, message: "user registered successfully", data: {_id: user._id, name:user.name, email:user.email, token: generateToken(user._id)
-    },
+  const user = await User.create({name, email, password, number, role });
+  res.status(201).json({success:true, message: "user registered successfully", data: {_id: user._id, name:user.name, email:user.email, token: generateToken(user._id)},
   });
 });
 
@@ -47,7 +44,7 @@ export const getUsers = asyncHandler(async (req, res) => {
     .json({ success: true, message: "users fetched", data: users });
 });
 
-//GET /api/users/:id
+//GET /api/users/:id (get user by ID)
 export const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -58,9 +55,9 @@ export const getUserById = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, message: "user fetched", data: user });
 });
 
-//POST /api/users
+//POST /api/users (create user internally by admin)
 export const createUser = asyncHandler(async (req, res) => {
-  const { name, email, address, password, role, age } = req.body;
+  const { name, email, password, number, role } = req.body;
 
   //check if email exists
   const existing = await User.findOne({ email });
@@ -69,7 +66,7 @@ export const createUser = asyncHandler(async (req, res) => {
     throw new Error("Email already in use");
   }
 
-  const newUser = await User.create({ name, email, address, password, role, age });
+  const newUser = await User.create({ name, email, password, number, role });
   res
     .status(201)
     .json({ success: true, message: "user created", data: newUser });
@@ -87,6 +84,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
   res.status(200).json({ success: true, message: "user updated", data: user });
 });
+
 
 //DELETE /api/users/:id
 export const deleteUser = asyncHandler(async (req, res) => {

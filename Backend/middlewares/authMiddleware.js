@@ -2,6 +2,8 @@ import expressAsyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+
+//We are only using decoded token data for this protect middlware becasue we will use chain of middlewares while accessing routes e.g. ceoAndMgmt middleware uses protect middleware first to set req.user and then checks for roles or ownership. 
 export const protect = expressAsyncHandler(async (req, res, next) => {
   let token;
 
@@ -16,7 +18,7 @@ export const protect = expressAsyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.id).select("-password");
       if (!req.user) {
         res.status(401);
-        throw new Error("Not authorized");
+        throw new Error("Not authorized from token: user not found");
       }
       return next();
     } catch (error) {
@@ -37,23 +39,26 @@ export const protect = expressAsyncHandler(async (req, res, next) => {
   }
 });
 
-//Admin-only middleware
-export const admin = (req, res, next) => {
-  if (req.user && req.user.role === "Management") {
+//CEO-only middleware we dont have to use decode token data here as protect middleware already set req.user.
+export const ceoOnly = (req, res, next) => {
+  if (req.user && req.user.role === "CEO") {
     return next();
   }
   res.status(403);
-  throw new Error("CEO and MANAGEMENT access only");
+  throw new Error("CEO access only");
 };
 
 //Ownership Middleware
-export const ownerOrAdmin = (req, res, next) => {
+export const ceoAndMgmt = (req, res, next) => {
   if (
     req.user &&
-    (((req.user.role === "Management" || "CEO")) || req.user._id.toString()) === req.params.id)
-   {
+    (req.user.role === "Management" ||
+      req.user.role === "CEO" ||
+      req.user._id.toString() === req.params.id)
+  ) {
     return next();
   }
+
   res.status(403);
-  throw new Error("Access denied: not CEO or Management");
+  throw new Error("Access denied: not CEO, Management, or owner");
 };
