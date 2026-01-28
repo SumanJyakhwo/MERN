@@ -40,7 +40,7 @@ export const protect = expressAsyncHandler(async (req, res, next) => {
 });
 
 //CEO-only middleware we dont have to use decode token data here as protect middleware already set req.user.
-export const ceoOnly = (req, res, next) => {
+export const privilegedonly = (req, res, next) => {
   if (req.user && req.user.role === "CEO") {
     return next();
   }
@@ -49,7 +49,7 @@ export const ceoOnly = (req, res, next) => {
 };
 
 //Ownership Middleware
-export const ceoAndMgmt = (req, res, next) => {
+export const ownerOrPrivileged = (req, res, next) => {
   if (
     req.user &&
     (req.user.role === "Management" ||

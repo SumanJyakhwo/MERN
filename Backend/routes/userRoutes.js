@@ -7,8 +7,9 @@ import {
   deleteUser,
   registerUser,
   authUser,
+  updateUserPassword,
 } from "../controllers/userController.js";
-import { ceoOnly, ceoAndMgmt, protect } from "../middlewares/authMiddleware.js";
+import { protect, ownerOrPrivileged, privilegedonly } from "../middlewares/authMiddleware.js";
 import {
   validateUpdate,
   validate,
@@ -25,25 +26,22 @@ userRoutes.post("/login", validateLogin, authUser);
 //POST /api/users/register
 userRoutes.post("/register", validateRegister, validate, registerUser);
 
-//GET /api/users (protected, admin only)
-userRoutes.get("/", protect, ceoAndMgmt, getUsers);
+//GET /api/users
+userRoutes.get("/", protect, privilegedonly, getUsers);
 
-//GET /api/users:id (protected, ownerOrAdmin)
-userRoutes.get("/:id", protect, ceoAndMgmt, getUserById);
+//GET /api/users:id 
+userRoutes.get("/:id", protect, ownerOrPrivileged, getUserById);
 
-//POST /api/users (protected - admin only for internal creation)
-userRoutes.post("/", protect, ceoAndMgmt, validateCreate, validate, createUser);
+//POST /api/users
+userRoutes.post("/", protect, privilegedonly, validateCreate, validate, createUser);
 
-//PUT /api/users/:id (protected)
-userRoutes.put(
-  "/:id",
-  protect,
-  ceoAndMgmt,
-  validateUpdate,
-  updateUser,
-);
+//PUT /api/users/:id 
+userRoutes.put("/:id", protect, ownerOrPrivileged, validateUpdate,updateUser,);
 
-//DELETE /api/users/:id (protected)
-userRoutes.delete("/:id", protect, ceoAndMgmt, deleteUser);
+//PUT /api/users/:id/password
+userRoutes.put("/:id/password", protect, ownerOrPrivileged, updateUserPassword)
+
+//DELETE /api/users/:id
+userRoutes.delete("/:id", protect, ownerOrPrivileged, deleteUser);
 
 export default userRoutes;
