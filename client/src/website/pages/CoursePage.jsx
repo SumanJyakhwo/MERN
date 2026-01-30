@@ -1,5 +1,6 @@
-import CourseCard from "./CourseCard";
-import PageHeader from "./PageHeader";
+import CourseCard from "../cards/CourseCard";
+import PageHeader from "../components/common/PageHeader";
+
 
 function CoursesPage() {
   return (

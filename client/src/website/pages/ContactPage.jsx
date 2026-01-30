@@ -1,4 +1,4 @@
-import PageHeader from "./PageHeader";
+import PageHeader from "../components/common/PageHeader";
 
 function ContactPage() {
   return (

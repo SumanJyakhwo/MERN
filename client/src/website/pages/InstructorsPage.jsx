@@ -1,5 +1,6 @@
-import InstructorCard from "./InstructorCard";
-import PageHeader from "./PageHeader";
+import InstructorCard from "../cards/InstructorCard";
+import PageHeader from "../components/common/PageHeader";
+
 
 function InstructorsPage() {
   return (

@@ -1,11 +1,12 @@
-import SummaryCard from "./SummaryCard";
-import DataTable from "./DataTable";
 import AddTransactionForm from "./AddTransactionForm";
+import DataTable from "./DataTable";
 import FinanceChart from "./FinanceChart";
+import SummaryCard from "./SummaryCard";
+
 
 function DashboardContent() {
   return (
-    <main className="flex-1 p-[32px]">
+    <main className="flex-1 p-[32px] bg-[#F9F5FF]">
       
       <div className="grid grid-cols-3 gap-[24px] mb-[40px]">
         <SummaryCard title="Total Income" amount="$12,400" />

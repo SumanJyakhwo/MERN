@@ -1,5 +1,6 @@
-import OfferCard from "./OfferCard";
-import PageHeader from "./PageHeader";
+import OfferCard from "../cards/OfferCard";
+import PageHeader from "../components/common/PageHeader";
+
 
 function OffersPage() {
   return (
